@@ -1,0 +1,76 @@
+{
+  "projectId": "15430492826897720561",
+  "projectName": "CurdCellar",
+  "designSystemId": "assets/4211518626539253865",
+  "designSystem": {
+    "displayName": "CurdCellar Premium Artisanal",
+    "theme": {
+      "colorMode": "LIGHT",
+      "headlineFont": "DM_SANS",
+      "bodyFont": "DM_SANS",
+      "labelFont": "DM_SANS",
+      "roundness": "ROUND_TWELVE",
+      "customColor": "#92400E",
+      "overridePrimaryColor": "#92400E",
+      "overrideSecondaryColor": "#D97706",
+      "overrideTertiaryColor": "#059669",
+      "backgroundLight": "#FFFBEB",
+      "backgroundDark": "#1C1917"
+    },
+    "typography": {
+      "display-lg": {
+        "fontFamily": "DM Sans",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "1.1"
+      },
+      "headline-md": {
+        "fontFamily": "DM Sans",
+        "fontSize": "28px",
+        "fontWeight": "600",
+        "lineHeight": "1.2"
+      },
+      "body-md": {
+        "fontFamily": "DM Sans",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "1.6"
+      },
+      "label-sm": {
+        "fontFamily": "JetBrains Mono",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "1.4"
+      }
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "24px",
+      "xl": "32px",
+      "2xl": "48px"
+    }
+  },
+  "screens": [
+    {
+      "id": "6715655eeac642559ade9bdb708bcfa2",
+      "title": "Giriş Ekranı - CurdCellar",
+      "type": "login"
+    },
+    {
+      "id": "25a82d5cce274318bffc19cd7dd7bbf6",
+      "title": "Kontrol Paneli - CurdCellar",
+      "type": "dashboard"
+    }
+  ],
+  "colorPalette": {
+    "primary": "#92400E",
+    "secondary": "#D97706",
+    "accent": "#059669",
+    "background": "#FFFBEB",
+    "surface": "#FEF3C7",
+    "neutral": "#78716C"
+  },
+  "designDirection": "Premium Artisanal — warm earth tones, amber accents, organic card-based layout"
+}

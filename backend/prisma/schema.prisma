@@ -1,0 +1,161 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(OPERATOR)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  OPERATOR
+  VIEWER
+}
+
+model Recipe {
+  id           String   @id @default(uuid())
+  name         String
+  cheeseType   String
+  milkType     String
+  description  String?
+  instructions String?
+  agingDays    Int
+  temperature  Float
+  humidity     Float
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  batches      Batch[]
+}
+
+model AgingRoom {
+  id          String   @id @default(uuid())
+  name        String
+  capacity    Int
+  temperature Float
+  humidity    Float
+  status      RoomStatus @default(ACTIVE)
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  batches     Batch[]
+}
+
+enum RoomStatus {
+  ACTIVE
+  MAINTENANCE
+  INACTIVE
+}
+
+model Batch {
+  id            String      @id @default(uuid())
+  batchCode     String      @unique
+  recipeId      String
+  recipe        Recipe      @relation(fields: [recipeId], references: [id])
+  agingRoomId   String?
+  agingRoom     AgingRoom?  @relation(fields: [agingRoomId], references: [id])
+  milkQuantity  Float
+  startDate     DateTime
+  expectedEnd   DateTime
+  actualEnd     DateTime?
+  status        BatchStatus @default(PRODUCTION)
+  notes         String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  qualityChecks QualityCheck[]
+  inventory     Inventory?
+}
+
+enum BatchStatus {
+  PRODUCTION
+  AGING
+  READY
+  SOLD
+  DISCARDED
+}
+
+model QualityCheck {
+  id          String   @id @default(uuid())
+  batchId     String
+  batch       Batch    @relation(fields: [batchId], references: [id])
+  checkDate   DateTime
+  inspector   String
+  texture     Int
+  flavor      Int
+  appearance  Int
+  aroma       Int
+  overallScore Float
+  passed      Boolean
+  notes       String?
+  createdAt   DateTime @default(now())
+}
+
+model Inventory {
+  id        String   @id @default(uuid())
+  batchId   String   @unique
+  batch     Batch    @relation(fields: [batchId], references: [id])
+  quantity  Float
+  unit      String   @default("kg")
+  location  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?
+  phone     String?
+  address   String?
+  city      String?
+  taxId     String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  orderCode   String      @unique
+  customerId  String
+  customer    Customer    @relation(fields: [customerId], references: [id])
+  orderDate   DateTime
+  deliveryDate DateTime?
+  status      OrderStatus @default(PENDING)
+  totalAmount Float
+  notes       String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  items       OrderItem[]
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model OrderItem {
+  id        String @id @default(uuid())
+  orderId   String
+  order     Order  @relation(fields: [orderId], references: [id])
+  product   String
+  quantity  Float
+  unit      String @default("kg")
+  unitPrice Float
+  total     Float
+}
